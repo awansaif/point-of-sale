@@ -51,5 +51,6 @@ Route::group([ 'middleware' => 'auth' ], function(){
         return view('pages.sales-count');
     });
     // 
+    //routers
     
 });
