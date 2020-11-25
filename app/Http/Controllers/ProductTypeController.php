@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Carbon\Carbon;
 class ProductTypeController extends Controller
 {
     /**
@@ -16,7 +16,14 @@ class ProductTypeController extends Controller
     public function index()
     {
         //
-        return view('pages.product-types');
+        $product_types = ProductType::orderBy('id', 'DESC')->get();
+        $last_update_time = ProductType::select('updated_at')->latest()->first();
+        $date = Carbon::parse($last_update_time['updated_at']);  
+        $data = [
+            'product_types' => $product_types,
+            'last_update_time' => $date->isoFormat('MMMM Do YYYY, h:mm:ss a'), 
+        ];
+        return view('pages.product-types',compact('data'));
     }
 
     /**
@@ -86,9 +93,11 @@ class ProductTypeController extends Controller
      * @param  \App\Models\ProductType  $productType
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductType $productType)
+    public function edit(ProductType $productType, Request $request)
     {
         //
+        $product_type_data = ProductType::where('id', $request->product_id)->first();
+        return response()->json($product_type_data);
     }
 
     /**
@@ -101,6 +110,22 @@ class ProductTypeController extends Controller
     public function update(Request $request, ProductType $productType)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required',
+            'description' => 'required', 
+        ]);
+        if($validator->fails())
+        {
+            $data = [
+                'response' => 0,
+                'errors' => $validator->errors()->all(),
+                'class'  => 'alert alert-danger'
+            ];
+        }
+        else
+        {
+            
+        }
     }
 
     /**

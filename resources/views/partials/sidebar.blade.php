@@ -43,12 +43,12 @@
             <span>Add New Product</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="product-brands">
+          <a class="nav-link" href="/product-brands">
             <i class="fa fa-fw fa-industry"></i>
             <span>Product Brands</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="product-vendors">
+          <a class="nav-link" href="/product-vendors">
             <i class="fa fa-fw fa-users"></i>
             <span>Product Vendors</span></a>
         </li>
@@ -67,7 +67,7 @@
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Product Types</h6>
             <a class="dropdown-item addProductTypeModalbtn" href="#" data-toggle="modal" data-target="#addProductTypeModal"> <i class="fa fa-plus"></i> Add New Type</a>
-            <a class="dropdown-item" href="product-types"> <i class="fa fa-tags"></i> Product Types</a>
+            <a class="dropdown-item" href="/product-types"> <i class="fa fa-tags"></i> Product Types</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Dealers &amp; Brands</h6>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addProductVendorModal"> <i class="fa fa-user"></i> Add New Vendor</a>
