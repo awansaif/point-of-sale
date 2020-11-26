@@ -15,15 +15,11 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        //
-        $product_types = ProductType::orderBy('id', 'DESC')->get();
         $last_update_time = ProductType::select('updated_at')->latest()->first();
-        $date = Carbon::parse($last_update_time['updated_at']);  
         $data = [
-            'product_types' => $product_types,
-            'last_update_time' => $date->isoFormat('MMMM Do YYYY, h:mm:ss a'), 
+            'last_update_time' => $last_update_time['updated_at']->isoFormat('MMMM Do YYYY, h:mm:ss a'), 
         ];
-        return view('pages.product-types',compact('data'));
+        return view('pages.Product-Type.main',compact('data'));
     }
 
     /**
@@ -85,6 +81,8 @@ class ProductTypeController extends Controller
     public function show(ProductType $productType)
     {
         //
+        $product_types = ProductType::orderBy('id', 'DESC')->get();
+        return view('pages.Product-Type.show',compact('product_types')); 
     }
 
     /**
@@ -114,6 +112,13 @@ class ProductTypeController extends Controller
             'name'        => 'required',
             'description' => 'required', 
         ]);
+        $validator->after(function ($validator) {
+            if (ProductType::where('id','!=' ,request('product_type_id'))
+                            ->where('name', request('name'))
+                            ->exists()) {
+                $validator->errors()->add('name', 'Name is already exists in record.');
+            }
+        }); 
         if($validator->fails())
         {
             $data = [
@@ -121,10 +126,24 @@ class ProductTypeController extends Controller
                 'errors' => $validator->errors()->all(),
                 'class'  => 'alert alert-danger'
             ];
+            return response()->json($data);
         }
         else
         {
-            
+            $update = ProductType::where('id', $request->product_type_id)
+                                ->update([
+                                    'name' => $request->name,
+                                    'description' => $request->description,
+                                ]);
+            if($update)
+            {
+                $data =[
+                    'response' => 1,
+                    'message'  => 'Product Type update successfully.',
+                    'class'    => 'alert alert-success',
+                ];
+                return response()->json($data);
+            }
         }
     }
 

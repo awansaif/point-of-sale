@@ -21,38 +21,8 @@
             </a>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered nowrap" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>PTID</th>
-                            <th>Product Type</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>PTID</th>
-                            <th>Product Type</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach($data['product_types'] as $key => $product_type)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $product_type->name }}</td>
-                            <td class="text-truncate">{{  $product_type->description }}</td>
-                            <td>
-                                <button class="btn btn-primary btn-product-type-edit" data-id="{{ $product_type->id }}">Edit</button>
-                                <button class="btn btn-danger" data-id="{{  $product_type->id }}">Remove</button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="table-responsive" id="content">
+                
             </div>
         </div>
         <div class="card-footer small text-muted">Updated at {{ $data['last_update_time'] }} </div>
@@ -99,9 +69,36 @@
     </div>
 </div>
 
+<div class="modal" id="deleteProductTypeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Warning</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="deleteProductType">
+            <div class="modal-body">
+                @csrf
+                <input type="hidden" name="product_type_id" id="product_type_id_for_deletion">
+                <svg width="8em" height="8em" viewBox="0 0 17 16" class=" bi bi-exclamation-triangle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg>
+                <p>Are You sure to delete this product type?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Remove</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".btn-product-type-edit").on('click', function(){
+            $("#content").load('/show-product-types');
+            $(document).on('click', '.btn-product-type-edit' ,function(){
                 $.ajax({
                     url: '/edit-product-type',
                     method: 'get',
@@ -110,6 +107,8 @@
                     },
                     beforeSend:function()
                     {
+                        $("#editProductTypeMessage").html('');
+                        $("#editProductTypeMessage").removeClass();
                         $("#editProductType")[0].reset();
                     },
                     success:function(data)
@@ -154,8 +153,20 @@
                         {
                             $("#editProductTypeMessage").append(data.message);
                             $("#editProductTypeMessage").addClass(data.class);
+                            $("#content").load('/show-product-types');
                         }
                     }
+                });
+            });
+
+            $(document).on('click', '.btn-product-type-remove', function(){
+                $("#product_type_id_for_deletion").val($(this).attr('data-id'));
+                $("#deleteProductTypeModal").modal('show');
+            });
+
+            $("#deleteProductType").on('submit', function(){
+                $.ajax({
+                    url: 'delete-product-type'
                 });
             });
         });

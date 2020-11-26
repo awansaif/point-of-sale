@@ -414,6 +414,7 @@
                         {
                             $("#addProductTypeMessage").append(resp.message);
                             $("#addProductTypeMessage").addClass(resp.class);
+                            $("#content").load('/show-product-types');
                         }
                     }
                 });

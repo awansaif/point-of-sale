@@ -18,6 +18,7 @@ Route::group([ 'middleware' => 'auth' ], function(){
     Route::resource('product-vendors', ProductVendorController::class);
     Route::resource('product-brands', ProductBrandController::class);
     Route::get('product-types', [ProductTypeController::class, 'index']);
+    Route::get('show-product-types', [ProductTypeController::class, 'show']);
     Route::get('edit-product-type', [ProductTypeController::class, 'edit']);
     Route::post('update_product_type', [ProductTypeController::class, 'update']);
     Route::post('add-product-type', [ProductTypeController::class, 'store']);
