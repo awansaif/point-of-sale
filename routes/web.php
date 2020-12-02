@@ -15,14 +15,34 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 Route::group([ 'middleware' => 'auth' ], function(){
-    Route::resource('product-vendors', ProductVendorController::class);
-    Route::resource('product-brands', ProductBrandController::class);
+    
+    // product type routes
     Route::get('product-types', [ProductTypeController::class, 'index']);
     Route::get('show-product-types', [ProductTypeController::class, 'show']);
     Route::get('edit-product-type', [ProductTypeController::class, 'edit']);
     Route::post('update_product_type', [ProductTypeController::class, 'update']);
     Route::post('add-product-type', [ProductTypeController::class, 'store']);
-    Route::resource('products', ProductController::class);
+    Route::get('delete-product-type', [ProductTypeController::class, 'destroy']);
+    
+    //product brand routes
+    Route::get('product-brands', [ProductBrandController::class, 'index']);
+    Route::get('show-product-brands', [ProductBrandController::class, 'show']);
+    Route::post('add-product-brand', [ProductBrandController::class, 'store']);
+    Route::get('edit-product-brand', [ProductBrandController::class, 'edit']);
+    Route::post('update-product-brand', [ProductBrandController::class, 'update']);
+    Route::post('delete-product-brand', [ProductBrandController::class, 'destroy']);
+
+    // product vendor route
+    Route::get('product-vendors', [ProductVendorController::class, 'index']);
+    Route::get('show-product-vendors', [ProductVendorController::class, 'show']);
+    Route::post('add-product-vendor', [ProductVendorController::class, 'store']);
+    Route::get('edit-product-vendor', [ProductVendorController::class, 'edit']);
+    Route::post('update-product-vendor', [ProductVendorController::class, 'update']);
+    Route::post('delete-product-vendor', [ProductVendorController::class, 'destroy']);
+    //Route::resource('products', ProductController::class);
+    Route::get('products', function () {
+        return view('pages.products');
+    });
     Route::get('retail-dashboard', function () {
         return view('pages.retail-dashboard');
     });

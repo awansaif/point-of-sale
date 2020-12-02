@@ -127,7 +127,7 @@
                             <option>Cables & Chargers</option>
                             <option>Power Supplies</option>
                         </select>
-                        <small class="float-right">Product type not listed here? <a href="#" data-toggle="modal"
+                        <small class="float-right">Product type not listed here? <a class="addProductTypeModalbtn" href="#" data-toggle="modal"
                                 data-target="#addProductTypeModal">Add new</a> </small>
                     </div>
                     <div class="form-group">
@@ -143,7 +143,7 @@
                             <option>Razer</option>
                             <option>MSI</option>
                         </select>
-                        <small class="float-right">Products brand not listed here? <a href="#" data-toggle="modal"
+                        <small class="float-right">Products brand not listed here? <a class="addProductBrandModal" href="#" data-toggle="modal"
                                 data-target="#addProductBrandModal">Add new</a> </small>
                     </div>
                     <div class="form-group">
@@ -261,18 +261,19 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form class="">
+            <form  class="" id="addProductBrand">
+                @csrf
                 <div class="modal-body">
-
+                    <div id="addProductBrandMessage"></div>
                     <div class="form-group">
                         <label for="">Product Brand</label>
-                        <input type="text" class="form-control" name="" value="" placeholder="Enter brand name here..."
+                        <input type="text" class="form-control" name="name" value="" placeholder="Enter brand name here..."
                             required>
                         <small class="text-muted">Example: Nokia, AMB or MSI etc</small>
                     </div>
                     <div class="form-group">
                         <label for="">Description <small class="text-muted">(Optional)</small></label>
-                        <textarea name="name" class="form-control" rows="8" cols="80"
+                        <textarea name="description" class="form-control" rows="8" cols="80"
                             placeholder="Add some note or description about this vendor..."></textarea>
                     </div>
                     <small class="text-muted"><em>Please double check information before submitting.</em></small>
@@ -299,30 +300,33 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form class="">
+            <form class="" id="addProductVendor">
+
                 <div class="modal-body">
+                    <div id="addProductVendorMessage"></div>
+                    @csrf
                     <div class="form-group">
                         <label for="">Vendor Name</label>
-                        <input type="text" class="form-control" name="" value=""
+                        <input type="text" class="form-control" name="name" value=""
                             placeholder="Enter vendor's name here..." required>
                         <small class="text-muted">Example: Anees Ahmad, Faisal Hayat or Shahzaib Khan etc</small>
                     </div>
                     <div class="form-group">
                         <label for="">Phone Number</label>
-                        <input type="text" class="form-control" name="" value=""
+                        <input type="text" class="form-control" name="contact" value=""
                             placeholder="Enter vendor's phone number here...">
                         <small class="text-muted">Example: 555-665-123</small>
                     </div>
                     <div class="form-group">
-                        <label for="">Email Address</label>
-                        <input type="email" class="form-control" name="" value=""
+                        <label for="">Email Address <small class="text-muted">(Optional)</small></label>
+                        <input type="email" class="form-control" name="email" value=""
                             placeholder="Enter vendor's email here...">
                         <small class="text-muted">Example: ahmadanees02@gmail.com</small>
                     </div>
                     <div class="form-group">
-                        <label for="">Description <small class="text-muted">(Optional)</small></label>
-                        <textarea name="name" class="form-control" rows="8" cols="80"
-                            placeholder="Add some note or description about this vendor..."></textarea>
+                        <label for="">Address <small class="text-muted">(Optional)</small></label>
+                        <textarea name="address" class="form-control" rows="8" cols="80"
+                            placeholder="Add address of this vendor..."></textarea>
                     </div>
                     <small class="text-muted"><em>Please double check information before submitting.</em></small>
                 </div>
@@ -418,6 +422,108 @@
                         }
                     }
                 });
+            });
+
+            $(".addProductBrandModalBtn").on('click', function(){
+                $("#addProductBrandMessage").html(' ');
+                $("#addProductBrandMessage").removeClass();
+                $("#addProductBrand")[0].reset();
+            });
+
+            $("#addProductBrand").on('submit', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: 'add-product-brand',
+                    method: 'post',
+                    data: new FormData(this),
+                    processData:false,
+                    dataType: 'JSON',
+                    contentType:false,
+                    cache:false,
+                    beforeSend:function()
+                    {
+                        $("#addProductBrandMessage").html(' ');
+                        $("#addProductBrandMessage").removeClass();
+                    },
+                    success:function(data)
+                    {
+                        if(data.response == 0)
+                        {
+                            $.each(data.errors, function(i,v){
+                                $("#addProductBrandMessage").append('*' + ' ' + v + '<br>');
+                            });
+                            $("#addProductBrandMessage").addClass(data.class);
+                        }
+                        else
+                        {
+
+                            $("#addProductBrandMessage").append(data.message);
+                            $("#addProductBrandMessage").addClass(data.class);
+                            $("#ProductBrandContent").load('show-product-brands');
+                        }
+                    }
+                });
+            });
+
+
+            $(".addProductVendorModal").on('click', function(){
+                $("#addProductVendorMessage").html('');
+                $("#addProductVendorMessage").removeClass();
+                $("#addProductVendor")[0].reset(); 
+            });
+
+            $("#addProductVendor").on('submit', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: 'add-product-vendor',
+                    method: 'post',
+                    data: new FormData(this),
+                    processData:false,
+                    dataType: 'JSON',
+                    contentType:false,
+                    cache:false,
+                    beforeSend:function()
+                    {
+                        $("#addProductVendorMessage").html(' ');
+                        $("#addProductVendorMessage").removeClass();
+                    },
+                    success:function(data)
+                    {
+                        if(data.response == 0)
+                        {
+                            $.each(data.errors, function(i,v){
+                                $("#addProductVendorMessage").append('*' + ' ' + v + '<br>');
+                            });
+                            $("#addProductVendorMessage").addClass(data.class);
+                        }
+                        else
+                        {
+
+                            $("#addProductVendorMessage").append(data.message);
+                            $("#addProductVendorMessage").addClass(data.class);
+                            $.ajax({
+                                url: 'show-product-vendors',
+                                method: 'get',
+                                beforeSend:function()
+                                {
+                                    $("#ProductVendorContent").html('');
+                                  $("#spinner").addClass('d-block');
+                                },
+                                success:function(data)
+                                {
+                                  $("#spinner").addClass('d-none');
+                                  $("#ProductVendorContent").append(data);
+                                }
+                              });
+                        }
+                    }
+                });
+            });
+
+            $(".addProductModal").on('click', function(){
+                $("#addProductMessage").html('');
+                $("#addProductMessage").removeClass();
+                $("#addProduct")[0].reset();
             });
         });
     </script>

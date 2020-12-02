@@ -15,11 +15,8 @@ class CreateProductBrandsTable extends Migration
     {
         Schema::create('product_brands', function (Blueprint $table) {
             $table->id()->startingValue(100);
-            $table->string('brand_name');
-            $table->string('products');
-            $table->integer('total_product_qty');
-            $table->integer('revenue_generated');
-            $table->integer('inventory_worth');
+            $table->string('name')->unique();
+            $table->string('description');
             $table->timestamps();
         });
     }

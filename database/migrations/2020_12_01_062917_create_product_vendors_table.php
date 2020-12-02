@@ -15,12 +15,10 @@ class CreateProductVendorsTable extends Migration
     {
         Schema::create('product_vendors', function (Blueprint $table) {
             $table->id()->startingValue(100);
-            $table->string('vendor_name');
-            $table->string('phone')->unique();
-            $table->integer('products');
-            $table->integer('total_products_qty');
-            $table->integer('revenue_generated');
-            $table->integer('inventory_worth');
+            $table->string('name');
+            $table->string('contact')->uniqie();
+            $table->string('address')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamps();
         });
     }

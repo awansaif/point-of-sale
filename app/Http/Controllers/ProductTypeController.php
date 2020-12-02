@@ -153,8 +153,20 @@ class ProductTypeController extends Controller
      * @param  \App\Models\ProductType  $productType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductType $productType)
+    public function destroy(ProductType $ProductType, Request $request)
     {
         //
+        // return response()->json($request->product_type_id);
+        $delete = ProductType::where('id', $request->product_type_id)->delete();
+        if($delete)
+        {
+            $data = [
+            'response' => 1,
+            'message'  => 'Product Type deleted successfully.',
+            'class'   => 'alert alert-success'
+            ];
+            return response()->json($data);
+        }
+        
     }
 }

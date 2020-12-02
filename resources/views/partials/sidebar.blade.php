@@ -38,7 +38,7 @@
             <span>Record New Sale</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="" data-toggle="modal" data-target="#addProductModal">
+          <a class="nav-link addProductModal" href="" data-toggle="modal" data-target="#addProductModal">
             <i class="fa fa-fw fa-tags"></i>
             <span>Add New Product</span></a>
         </li>
@@ -62,7 +62,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Inventory</h6>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addProductModal"> <i class="fa fa-plus"></i> Add Product</a>
+            <a class="dropdown-item addProductModal" href="#" data-toggle="modal" data-target="#addProductModal"> <i class="fa fa-plus"></i> Add Product</a>
             <a class="dropdown-item" href="products"> <i class="fa fa-tags"></i> All Products</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Product Types</h6>
@@ -70,8 +70,8 @@
             <a class="dropdown-item" href="/product-types"> <i class="fa fa-tags"></i> Product Types</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Dealers &amp; Brands</h6>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addProductVendorModal"> <i class="fa fa-user"></i> Add New Vendor</a>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addProductBrandModal"> <i class="fa fa-industry"></i> Add New Brand</a>
+            <a class="dropdown-item addProductVendorModal" href="#" data-toggle="modal" data-target="#addProductVendorModal"> <i class="fa fa-user"></i> Add New Vendor</a>
+            <a class="dropdown-item addProductBrandModalBtn" href="#" data-toggle="modal" data-target="#addProductBrandModal"> <i class="fa fa-industry"></i> Add New Brand</a>
           </div>
         </li>
         <li class="nav-item">
