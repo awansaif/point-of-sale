@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Carbon\Carbon;
 class ProductTypeController extends Controller
 {
     /**
@@ -15,8 +15,11 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        //
-        return view('pages.product-types');
+        $last_update_time = ProductType::select('updated_at')->latest()->first();
+        $data = [
+            'last_update_time' => $last_update_time['updated_at']->isoFormat('MMMM Do YYYY, h:mm:ss a'), 
+        ];
+        return view('pages.Product-Type.main',compact('data'));
     }
 
     /**
@@ -78,6 +81,8 @@ class ProductTypeController extends Controller
     public function show(ProductType $productType)
     {
         //
+        $product_types = ProductType::orderBy('id', 'DESC')->get();
+        return view('pages.Product-Type.show',compact('product_types')); 
     }
 
     /**
@@ -86,9 +91,11 @@ class ProductTypeController extends Controller
      * @param  \App\Models\ProductType  $productType
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductType $productType)
+    public function edit(ProductType $productType, Request $request)
     {
         //
+        $product_type_data = ProductType::where('id', $request->product_id)->first();
+        return response()->json($product_type_data);
     }
 
     /**
@@ -101,6 +108,43 @@ class ProductTypeController extends Controller
     public function update(Request $request, ProductType $productType)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required',
+            'description' => 'required', 
+        ]);
+        $validator->after(function ($validator) {
+            if (ProductType::where('id','!=' ,request('product_type_id'))
+                            ->where('name', request('name'))
+                            ->exists()) {
+                $validator->errors()->add('name', 'Name is already exists in record.');
+            }
+        }); 
+        if($validator->fails())
+        {
+            $data = [
+                'response' => 0,
+                'errors' => $validator->errors()->all(),
+                'class'  => 'alert alert-danger'
+            ];
+            return response()->json($data);
+        }
+        else
+        {
+            $update = ProductType::where('id', $request->product_type_id)
+                                ->update([
+                                    'name' => $request->name,
+                                    'description' => $request->description,
+                                ]);
+            if($update)
+            {
+                $data =[
+                    'response' => 1,
+                    'message'  => 'Product Type update successfully.',
+                    'class'    => 'alert alert-success',
+                ];
+                return response()->json($data);
+            }
+        }
     }
 
     /**
