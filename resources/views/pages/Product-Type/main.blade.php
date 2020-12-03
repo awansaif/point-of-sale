@@ -8,6 +8,7 @@
         <li class="breadcrumb-item active">Product Types</li>
     </ol>
     <!-- Page Content -->
+    <div id="deleteProductTypeMessage"></div>
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header bg-primary text-white">
@@ -164,9 +165,30 @@
                 $("#deleteProductTypeModal").modal('show');
             });
 
-            $("#deleteProductType").on('submit', function(){
+            $("#deleteProductType").on('submit', function(e){
+                e.preventDefault();
                 $.ajax({
-                    url: 'delete-product-type'
+                    url: 'delete-product-type',
+                    method: 'get',
+                    data: {
+                        'product_type_id':$("#product_type_id_for_deletion").val(),
+                    },
+                    beforeSend:function()
+                    {
+                        $("#deleteProductTypeMessage").html('');
+                        $("#deleteProductTypeMessage").removeClass();
+                    },
+                    success:function(data)
+                    {
+                        if(data.response == 1)
+                        {
+                            $("#deleteProductTypeMessage").append(data.message);
+                            $("#deleteProductTypeMessage").addClass(data.class);
+                            $("#deleteProductType")[0].reset();
+                            $("#deleteProductTypeModal").modal('hide');
+                            $("#content").load('/show-product-types');
+                        }
+                    }
                 });
             });
         });
