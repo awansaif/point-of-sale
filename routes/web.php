@@ -14,7 +14,7 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-Route::group([ 'middleware' => 'auth' ], function(){
+Route::group([ 'middleware' => ['auth' ,'verified']], function(){
     
     // product type routes
     Route::get('product-types', [ProductTypeController::class, 'index']);
@@ -39,10 +39,18 @@ Route::group([ 'middleware' => 'auth' ], function(){
     Route::get('edit-product-vendor', [ProductVendorController::class, 'edit']);
     Route::post('update-product-vendor', [ProductVendorController::class, 'update']);
     Route::post('delete-product-vendor', [ProductVendorController::class, 'destroy']);
-    //Route::resource('products', ProductController::class);
-    Route::get('products', function () {
-        return view('pages.products');
-    });
+
+
+    // Route::resource('products', ProductController::class);
+    // product routes
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('show-products', [ProductController::class, 'show']);
+    Route::get('add-product', [ProductController::class, 'create']);
+    Route::post('save-product', [ProductController::class, 'store']);
+
+    // Route::get('products', function () {
+    //     return view('pages.products');
+    // });
     Route::get('retail-dashboard', function () {
         return view('pages.retail-dashboard');
     });
