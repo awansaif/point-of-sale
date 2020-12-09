@@ -15,10 +15,15 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
+
+
         $last_update_time = ProductType::select('updated_at')->latest()->first();
+        
         $data = [
             'last_update_time' => $last_update_time['updated_at']->isoFormat('MMMM Do YYYY, h:mm:ss a'), 
         ];
+
+
         return view('pages.Product-Type.main',compact('data'));
     }
 
