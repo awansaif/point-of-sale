@@ -78,10 +78,10 @@
             <i class="fa fa-fw fa-tags"></i>
           </div>
           <div class="card-text">
-            <h1 class="text-center display-3"><strong>14</strong></h1>
+            <h1 class="text-center display-3"><strong>{{ $data['short-items'] }}</strong></h1>
           </div>
         </div>
-        <a class="card-footer text-white clearfix small z-1" href="short-items.html">
+        <a class="card-footer text-white clearfix small z-1" href="/short-items">
           <span class="float-left">View Details</span>
           <span class="float-right">
             <i class="fa fa-angle-right"></i>

@@ -17,7 +17,9 @@
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/dataTables.bootstrap4.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
     @livewireStyles
 </head>
@@ -57,6 +59,8 @@
     <script src="{{ asset('js/datatables-demo.js') }}"></script>
     <script src="{{ asset('js/chart-bar-demo.js') }}"></script>
     <script src="{{ asset('js/chart-pie-demo.js') }}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
     @include('partials.models')
 </body>
 

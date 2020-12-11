@@ -94,6 +94,10 @@
                                 </select>
                                 <small class="text-muted">Product vendor is optional.</small>
                             </div>
+                            <div class="col-sm-6">
+                                <label>Sale Price:</label>
+                                <input type="number" name="sale_price" id="sale_price" class="form-control" placeholder="sale price for product">
+                            </div>
                         </div>
                         
                     </div>

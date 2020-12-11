@@ -62,6 +62,7 @@ class ProductController extends Controller
             'cost_per_item'   => 'required|numeric',
             'inventory_worth' => 'required|numeric',
             'vendor'          => 'nullable',
+            'sale_price'      => 'required|gte:cost_per_item|numeric'
             ]);
         if($validator->fails())
         {
@@ -91,6 +92,7 @@ class ProductController extends Controller
                     $data->cost_per_item    = $request->cost_per_item;
                     $data->inventory_worth  = $request->stock * $request->cost_per_item;
                     $data->vendor      = $request->vendor;
+                    $data->sale_price  = $request->sale_price;
                     $check = $data->save();   
                 }
             }
@@ -105,6 +107,7 @@ class ProductController extends Controller
                 $data->cost_per_item    = $request->cost_per_item;
                 $data->inventory_worth  = $request->stock * $request->cost_per_item;
                 $data->vendor      = $request->vendor;
+                $data->sale_price  = $request->sale_price;
                 $check = $data->save();
             }
             
@@ -113,6 +116,16 @@ class ProductController extends Controller
                 $data = [
                     'message' => 'Product add successfully',
                     'class'   => 'alert alert-success',
+
+                ];
+                return response()->json($data);
+            }
+            else
+            {
+                $data = [
+                    'response'=> 0,
+                    'errors' => ['Product add successfully'],
+                    'class'   => 'alert alert-danger',
 
                 ];
                 return response()->json($data);
@@ -167,6 +180,7 @@ class ProductController extends Controller
             'cost_per_item'    => 'required',
             'inventory_worth'  => 'required',
             'vendor'           => 'required',
+            'sale_price'  => 'required|gte:cost_per_item', 
         ]);
         $validator->after(function ($validator) {
             if (Product::where('id','!=' ,request('product_id'))
@@ -206,6 +220,7 @@ class ProductController extends Controller
                                     'cost_per_item' => $request->cost_per_item,
                                     'inventory_worth' => $request->stock * $request->cost_per_item,
                                     'vendor'=> $request->vendor,
+                                    'sale_price' => $request->sale_price
                                 ]);
                 }
             }
@@ -220,6 +235,7 @@ class ProductController extends Controller
                                     'cost_per_item' => $request->cost_per_item,
                                     'inventory_worth' => $request->stock * $request->cost_per_item,
                                     'vendor'=> $request->vendor,
+                                    'sale_price' => $request->sale_price
                                 ]);
             }
             if($update)

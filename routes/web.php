@@ -6,17 +6,21 @@ use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductVendorController;
 use App\Http\Controllers\ProductStockController;
+use App\Http\Controllers\DashboardController;
 
+Route::group(['middleware' => ['guest']],function(){
 
-Route::get('/', function () {
-    return view('auth/login');
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-Route::group([ 'middleware' => ['auth' ,'verified']], function(){
+    Route::get('/', function () {
+        return view('auth/login');
+    });
     
+});
+Route::group([ 'middleware' => ['auth:sanctum' ,'verified']], function(){
+    Route::get('/', [DashboardController::class, 'index']);
+    //dashboard item routes
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/short-items', [DashboardController::class, 'show_items']);
+
     // product type routes
     Route::get('product-types', [ProductTypeController::class, 'index']);
     Route::get('show-product-types', [ProductTypeController::class, 'show']);
@@ -53,6 +57,7 @@ Route::group([ 'middleware' => ['auth' ,'verified']], function(){
     Route::post('delete-product', [ProductController::class, 'destroy']);
 
     Route::get('update-product-stock', [ProductStockController::class, 'index']);
+    Route::post('update-product-stock', [ProductStockController::class, 'store']);
 
     // Route::get('products', function () {
     //     return view('pages.products');

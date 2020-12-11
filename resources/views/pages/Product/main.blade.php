@@ -30,9 +30,9 @@
         </div>
         <div class="card-body" id="productContent">
             <div class="text-center" id="spinner">
-                    <div class="spinner-border" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
             </div>
         </div>
         <div class="card-footer small text-muted"></div>
@@ -127,6 +127,10 @@
                                 @endforeach
                             </select>
                             <small class="text-muted">Product vendor is optional.</small>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Sale Price:</label>
+                            <input type="number" name="sale_price" id="edit_sale_price" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -231,6 +235,7 @@
                             $("#edit-cost-per-item").val(data.cost_per_item);
                             $("#edit-inventory-worth").val(data.inventory_worth);
                             $("#edit-vendor"+data.vendor).attr('selected','selected');
+                            $("#edit_sale_price").val(data.sale_price);
                             $("#edit-product-modal").modal('show');
                         }
                     }

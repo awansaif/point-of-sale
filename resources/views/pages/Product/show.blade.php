@@ -1,5 +1,5 @@
 <div class="table-responsive" >
-<table class="table table-bordered nowrap" id="dataTable" width="100%" cellspacing="0">
+    <table class="table table-bordered nowrap" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>PID</th>
@@ -10,6 +10,7 @@
                             <th>In-stock</th>
                             <th>Cost/item</th>
                             <th>Inventory Worth</th>
+                            <th>Sale Price</th>
                             <th>Revenue Generated</th>
                             <th>Vendor</th>
                             <th>Action</th>
@@ -25,6 +26,7 @@
                             <th>In-stock</th>
                             <th>Cost/item</th>
                             <th>Inventory Worth</th>
+                            <th>Sale Price</th>
                             <th>Revenue Generated</th>
                             <th>Vendor</th>
                             <th>Action</th>
@@ -43,6 +45,7 @@
                             <td>{{ $product->stock }}</td>
                             <td>Rs.{{ $product->cost_per_item }}</td>
                             <td>Rs.{{ $product->inventory_worth }}</td>
+                            <td>Rs.{{ $product->sale_price }}</td>
                             <td>Rs. {{ $product->revenue_generated }}</td>
                             <td>{{ $product->vendors->name }}</td>
                             <th>
@@ -57,3 +60,5 @@
     <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ asset('js/datatables-demo.js') }}"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>

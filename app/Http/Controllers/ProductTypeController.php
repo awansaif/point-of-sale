@@ -17,10 +17,10 @@ class ProductTypeController extends Controller
     {
 
 
-        $last_update_time = ProductType::select('updated_at')->latest()->first();
+        // $last_update_time = ProductType::select('updated_at')->latest()->findorfail();
         
         $data = [
-            'last_update_time' => $last_update_time['updated_at']->isoFormat('MMMM Do YYYY, h:mm:ss a'), 
+            'last_update_time' =>'dasn', 
         ];
 
 

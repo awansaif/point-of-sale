@@ -18,29 +18,32 @@
             <button class="btn btn-success btn-add-field float-right" data-id="0">Add New fields</button>
         </div>
         <form id="update-product-stock">
+            @csrf
             <div class="card-body">
+                <div id="addProductStockMessage"></div>
                 <h4 id="product-no"></h4>
                 <div id="form-group">
                     <div class="from-group row ">
-                        <div class="col-sm-4">
-                            <label>Product</label>
-                            <select class="form-control select2" name="product[]" style="width: 100%;">
-                            <option selected="selected">Alabama</option>
-                            <option>Alaska</option>
-                            <option disabled="disabled">California (disabled)</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
-                          </select>
+                        <div class="col-sm-3">
+                            <label>Product:</label>
+                            <select class="form-control" name="product[]" style="width: 100%;">
+                                @foreach($data as $key => $product)
+                                <option value="" disabled selected hidden>Choose a Product ... </option>
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="col-sm-4">
-                            <label>Stock</label>
+                        <div class="col-sm-3">
+                            <label>Stock:</label>
                             <input type="number" class="form-control" name="stock[]">
                         </div>
-                        <div class="col-sm-4">
-                            <label>Cost/item</label>
+                        <div class="col-sm-3">
+                            <label>Cost/item:</label>
                             <input type="number" class="form-control" name="cost_per_item[]">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Sale Price:</label>
+                            <input type="number" class="form-control" name="sale_price[]">
                         </div>
                     </div>
                 </div>
@@ -52,51 +55,29 @@
     </div>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            $('.select').select2();
+        });
         $(document).ready(function(){
             $(".btn-add-field").on('click', function(){
                 if($(this).attr('data-id') <= 9)
                 {
+                    
                     var data = $("#form-group").html();
-                    // var data = "<div class='form-group row'>";
-                    // data += "<div class='col-4'>";
-                    // data += "<label>"
-                    // data += "</div>";
-                    // data += "<div class='col-4'>";
-                    // data += "</div>";
-                    // data += "<div class='col-4'>";
-                    // data += "</div>";
-                    // data += "</div>";
                     $(".card-body").append(data);
                     var id = $(this).attr('data-id');
                     var new_id =  parseFloat(id) + 1;
                     $("#product-no").html('Product #' + new_id+'/10');
                     $(this).removeAttr('data-id');
-                    $(this).attr('data-id', new_id); 
+                    $(this).attr('data-id', new_id);
+                    
                 }
                 
             });
-
-            $("#product-pic").on('change',function(e){
-                $("#show-product-pic").attr('src', URL.createObjectURL(e.target.files[0]));
-            });
-            $("#inventory_worth").on('click',function(){
-                if($("#stock").val() == '')
-                {
-                    alert("Please provide product stock first.");
-                }
-                else if($("#cost_per_item").val() == '')
-                {
-                   alert("Please provide product cost per item first."); 
-                }
-                else
-                {
-                    $(this).val($("#stock").val() * $("#cost_per_item").val());
-                }
-            });
-            $("#save-product").on('submit', function(e){
+            $("#update-product-stock").on('submit', function(e){
                 e.preventDefault();
                 $.ajax({
-                    url: 'save-product',
+                    url: 'update-product-stock',
                     method: 'POST',
                     data: new FormData(this),
                     dataType: 'JSON',
@@ -105,21 +86,21 @@
                     processData: false,
                     beforeSend:function()
                     {
-                        $("#addProductMessage").html('');
-                        $("#addProductMessage").removeClass();
+                        $("#addProductStockMessage").html('');
+                        $("#addProductStockMessage").removeClass();
                     },
                     success:function(data)
                     {
                         if(data.response == 0)
                         {
                             $.each(data.errors, function(i,v){
-                                $("#addProductMessage").append('*' + ' ' + v + '<br>');
+                                $("#addProductStockMessage").append('*' + ' ' + v + '<br>');
                             });
-                            $("#addProductMessage").addClass(data.class);
+                            $("#addProductStockMessage").addClass(data.class);
                         }
                         else{
-                            $("#addProductMessage").append(data.message);
-                            $("#addProductMessage").addClass(data.class);
+                            $("#addProductStockMessage").append(data.message);
+                            $("#addProductStockMessage").addClass(data.class);
                             $("#save-product")[0].reset();
                         }
                         
