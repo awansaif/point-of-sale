@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductVendorController;
+use App\Http\Controllers\ProductStockController;
 
 
 Route::get('/', function () {
@@ -47,6 +48,11 @@ Route::group([ 'middleware' => ['auth' ,'verified']], function(){
     Route::get('show-products', [ProductController::class, 'show']);
     Route::get('add-product', [ProductController::class, 'create']);
     Route::post('save-product', [ProductController::class, 'store']);
+    Route::get('edit-product', [ProductController::class, 'edit']);
+    Route::post('update-product', [ProductController::class, 'update']);
+    Route::post('delete-product', [ProductController::class, 'destroy']);
+
+    Route::get('update-product-stock', [ProductStockController::class, 'index']);
 
     // Route::get('products', function () {
     //     return view('pages.products');

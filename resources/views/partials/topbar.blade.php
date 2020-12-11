@@ -22,7 +22,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addSaleModal"> <i class="fa fa-money"></i> New Sale</a>
-            <a class="dropdown-item addProductModal" href="#" data-toggle="modal" data-target="#addProductModal"> <i class="fa fa-tag"></i> New Product</a>
+            
             <div class="dropdown-divider"></div>
             <a class="dropdown-item addProductTypeModalbtn" href="#" data-toggle="modal" data-target="#addProductTypeModal"> <i class="fa fa-tags"></i> New Product Type</a>
             <a class="dropdown-item addProductVendorModal" href="#" data-toggle="modal" data-target="#addProductVendorModal"> <i class="fa fa-user"></i> New Product Vendor</a>
@@ -36,10 +36,10 @@
             <i class="fa fa-flash fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="products.html"> <i class="fa fa-tag"></i> All Products</a>
-            <a class="dropdown-item" href="product-types.html"> <i class="fa fa-tags"></i> Product Types</a>
-            <a class="dropdown-item " href="product-vendors.html"> <i class="fa fa-user"></i> Product Vendors</a>
-            <a class="dropdown-item" href="product-brands.html"> <i class="fa fa-industry"></i> Product Brands</a>
+            <a class="dropdown-item" href="/products"> <i class="fa fa-tag"></i> All Products</a>
+            <a class="dropdown-item" href="/product-types"> <i class="fa fa-tags"></i> Product Types</a>
+            <a class="dropdown-item " href="/product-vendors"> <i class="fa fa-user"></i> Product Vendors</a>
+            <a class="dropdown-item" href="/product-brands"> <i class="fa fa-industry"></i> Product Brands</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="revenue.html"> <i class="fa fa-money"></i> Revenue</a>
             <a class="dropdown-item" href="improvements.html"> <i class="fa fa-rocket"></i> Improvements</a>

@@ -38,11 +38,6 @@
             <span>Record New Sale</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link addProductModal" href="" data-toggle="modal" data-target="#addProductModal">
-            <i class="fa fa-fw fa-tags"></i>
-            <span>Add New Product</span></a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="/product-brands">
             <i class="fa fa-fw fa-industry"></i>
             <span>Product Brands</span></a>
@@ -62,7 +57,6 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Inventory</h6>
-            <a class="dropdown-item addProductModal" href="#" data-toggle="modal" data-target="#addProductModal"> <i class="fa fa-plus"></i> Add Product</a>
             <a class="dropdown-item" href="products"> <i class="fa fa-tags"></i> All Products</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Product Types</h6>
